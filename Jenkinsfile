@@ -2,6 +2,10 @@ pipeline {
     agent any
 
     stages {
+        //This a comment
+        /*
+        multiple comments
+        */
         stage('Build') {
             agent{
                 docker{
@@ -28,6 +32,7 @@ pipeline {
                 }
             }
             steps{
+                //commnet inside the sh using: #
                 sh '''
                     echo "Test stage"
                     test -f build/index.html
