@@ -2,13 +2,11 @@ pipeline {
     agent any
 
     stages {
-        //This a comment
         /*
-        multiple comments
-        */
+
         stage('Build') {
-            agent{
-                docker{
+            agent {
+                docker {
                     image 'node:18-alpine'
                     reuseNode true
                 }
@@ -24,45 +22,46 @@ pipeline {
                 '''
             }
         }
-        stage('Test'){
-            agent{
-                docker{
+        */
+
+        stage('Test') {
+            agent {
+                docker {
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
-            steps{
-                //commnet inside the sh using: #
+
+            steps {
                 sh '''
-                    echo "Test stage"
-                    test -f build/index.html
+                    #test -f build/index.html
                     npm test
                 '''
             }
         }
-        stage('E2E'){
-            agent{
-                docker{
-                    image 'docker pull mcr.microsoft.com/playwright:v1.50.1-noble'
+
+        stage('E2E') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
                 }
             }
-            steps{
-                //&: start the cmd in background
+
+            steps {
                 sh '''
                     npm install serve
                     node_modules/.bin/serve -s build &
-                    #sleep 10s
                     sleep 10
                     npx playwright test
                 '''
             }
         }
     }
-    post{
-        always{
-            junit 'test-results/junit.xml'
+
+    post {
+        always {
+            junit 'jest-results/junit.xml'
         }
     }
-
 }
