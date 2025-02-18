@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-        NETLIFY_SITE_ID = ''
+        NETLIFY_SITE_ID = 'ba2e0f9d-a460-4ade-b6a8-8575f694a3b3'
         NETLIFY_AUTH_TOKEN = credentials('netflify-token')
     }
 
@@ -91,6 +91,7 @@ pipeline {
                     node_modules/.bin/netlify --version
                     echo "Deploying to production."
                     node_modules/.bin/netlify status
+                    node_modules/.bin/netlify deploy --dir=build --prod
                 '''
             }
         }
