@@ -50,8 +50,8 @@ pipeline {
             steps{
                 //commnet inside the sh using: #
                 sh '''
-                    npm install -g serve
-                    server -s build
+                    npm install serve
+                    node_modules/.bin/serve -s build
                     npx playwright test
                 '''
             }
